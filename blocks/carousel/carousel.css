@@ -91,7 +91,7 @@
 .cmp-carousel .hero-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   object-position: center;
 }
 
@@ -509,6 +509,45 @@ iframe[src*="editor"] .cmp-carousel .swiper-slide,
 }
 
 /* Responsive Design */
+/* Tablet/Medium screens - migrated from hero-banner responsive design */
+@media only screen and (max-width: 79.9375rem) {
+  .cmp-carousel .hero-banner,
+  .cmp-carousel .cmp-hero-banner {
+    aspect-ratio: 768/429;
+  }
+  
+  .cmp-carousel .hero-content .headline {
+    font-family: var(--font-display);
+    font-weight: var(--medium);
+    letter-spacing: 0;
+    font-size: 1.875rem;
+    line-height: 2.375rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cmp-carousel .hero-banner.hero-content--start-center .hero-content,
+  .cmp-carousel .cmp-hero-banner.hero-content--start-center .hero-content {
+    left: 20px;
+    top: unset;
+    transform: unset;
+    bottom: 76px;
+  }
+}
+
+/* Mobile screens - migrated from hero-banner responsive design */
+@media only screen and (max-width: 47.9375rem) {
+  .cmp-carousel .hero-banner,
+  .cmp-carousel .cmp-hero-banner {
+    aspect-ratio: 360/528;
+  }
+  
+  .cmp-carousel__footer {
+    justify-content: space-between;
+    bottom: 20px;
+  }
+}
+
+/* Existing carousel responsive rules - maintaining backward compatibility */
 @media (max-width: 1024px) {
   .cmp-carousel .swiper {
     height: 80vh;
