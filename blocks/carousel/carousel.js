@@ -4,6 +4,7 @@
  */
 
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 // Configuration defaults
 const DEFAULT_IMAGE_AUTOPLAY = 3000;
@@ -159,15 +160,33 @@ function generateHeroBannerHTML(slide, config) {
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'hero-image-wrapper';
     
-    const picture = document.createElement('picture');
-    const img = document.createElement('img');
-    img.src = slide.media;
-    img.alt = slide.mediaAlt;
-    img.className = 'hero-image';
-    img.loading = 'lazy';
+    // Use createOptimizedPicture for better performance and LCP optimization
+    const optimizedPicture = createOptimizedPicture(
+      slide.media,
+      slide.mediaAlt,
+      true, // Use eager loading for all slides
+      [
+        { media: '(min-width: 600px)', width: '2000' },
+        { width: '750' }
+      ]
+    );
     
-    picture.appendChild(img);
-    imageWrapper.appendChild(picture);
+    // Add hero-image class to the img element for styling consistency
+    const img = optimizedPicture.querySelector('img');
+    if (img) {
+      img.className = 'hero-image';
+      
+      // CLS Optimization: Add explicit dimensions to prevent layout shifts
+      img.setAttribute('width', '2000');
+      img.setAttribute('height', '1125');
+      img.style.aspectRatio = '16/9';
+      
+      // LCP Optimization: Add fetchpriority="high" to all carousel slide images
+      img.setAttribute('fetchpriority', 'high');
+      console.log('CLS & LCP Optimization: Applied explicit dimensions, aspect-ratio, fetchpriority="high" and eager loading to carousel slide');
+    }
+    
+    imageWrapper.appendChild(optimizedPicture);
     heroBanner.appendChild(imageWrapper);
   }
 
@@ -288,6 +307,60 @@ function isUniversalEditor() {
 }
 
 /**
+ * Dynamically load Swiper library
+ */
+function loadSwiper() {
+  return new Promise((resolve, reject) => {
+    // Check if Swiper is already loaded
+    if (window.Swiper) {
+      resolve(window.Swiper);
+      return;
+    }
+
+    // Check if script is already being loaded
+    if (document.querySelector('script[src*="swiper-bundle"]')) {
+      // Wait for existing script to load
+      const checkSwiper = setInterval(() => {
+        if (window.Swiper) {
+          clearInterval(checkSwiper);
+          resolve(window.Swiper);
+        }
+      }, 100);
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkSwiper);
+        if (!window.Swiper) {
+          reject(new Error('Swiper loading timeout'));
+        }
+      }, 10000);
+      return;
+    }
+
+    // Create and load the script
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js';
+    script.integrity = 'sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==';
+    script.crossOrigin = 'anonymous';
+    script.referrerPolicy = 'no-referrer';
+    
+    script.onload = () => {
+      if (window.Swiper) {
+        resolve(window.Swiper);
+      } else {
+        reject(new Error('Swiper not available after script load'));
+      }
+    };
+    
+    script.onerror = () => {
+      reject(new Error('Failed to load Swiper script'));
+    };
+    
+    document.head.appendChild(script);
+  });
+}
+
+/**
  * Initialize Swiper carousel
  */
 function initializeSwiper(carouselElement, config) {
@@ -303,11 +376,14 @@ function initializeSwiper(carouselElement, config) {
     }
   }
   
-  // Swiper is already loaded via head.html, initialize directly
-  const setupSwiper = () => {
-    // Check if Swiper is available
-    if (!window.Swiper) {
-      console.warn('Swiper not available, activating fallback mode');
+  // Load Swiper dynamically and then initialize
+  const setupSwiper = async () => {
+    try {
+      // Load Swiper library
+      await loadSwiper();
+      console.log('Swiper loaded successfully');
+    } catch (error) {
+      console.warn('Failed to load Swiper, activating fallback mode:', error);
       carouselElement.querySelector('.swiper')?.classList.add('swiper-fallback');
       return;
     }
@@ -489,7 +565,7 @@ export default function decorate(block) {
       moveInstrumentation(slide.originalRow, slideElement);
     }
 
-    // Generate and append hero banner
+    // Generate and append hero banner with LCP optimization
     const heroBanner = generateHeroBannerHTML(slide, config);
     slideElement.appendChild(heroBanner);
     

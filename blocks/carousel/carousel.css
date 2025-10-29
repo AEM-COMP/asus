@@ -30,6 +30,7 @@
   width: 100%;
   position: relative;
   background: #000;
+  contain: layout style paint;
 }
 
 .cmp-carousel__content {
@@ -58,6 +59,7 @@
 
 .cmp-carousel .swiper-wrapper {
   height: 100%;
+  contain: layout style;
 }
 
 .cmp-carousel .swiper-slide {
@@ -66,6 +68,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  contain: layout style;
 }
 
 /* Hero Banner Styles within Carousel */
@@ -93,6 +96,13 @@
   height: 100%;
   object-fit: fill;
   object-position: center;
+  aspect-ratio: 16/9;
+}
+
+/* Ensure images have explicit dimensions to prevent CLS */
+.cmp-carousel .hero-image {
+  min-height: 500px;
+  contain: layout style;
 }
 
 .cmp-carousel .hero-video {
@@ -516,6 +526,12 @@ iframe[src*="editor"] .cmp-carousel .swiper-slide,
     aspect-ratio: 768/429;
   }
   
+  /* Update media wrapper aspect ratios for tablet */
+  .cmp-carousel .hero-video-wrapper,
+  .cmp-carousel .hero-image-wrapper {
+    aspect-ratio: 768/429;
+  }
+  
   .cmp-carousel .hero-content .headline {
     font-family: var(--font-display);
     font-weight: var(--medium);
@@ -538,6 +554,12 @@ iframe[src*="editor"] .cmp-carousel .swiper-slide,
 @media only screen and (max-width: 47.9375rem) {
   .cmp-carousel .hero-banner,
   .cmp-carousel .cmp-hero-banner {
+    aspect-ratio: 360/528;
+  }
+  
+  /* Update media wrapper aspect ratios for mobile */
+  .cmp-carousel .hero-video-wrapper,
+  .cmp-carousel .hero-image-wrapper {
     aspect-ratio: 360/528;
   }
   
