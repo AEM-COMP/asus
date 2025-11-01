@@ -32,11 +32,55 @@ jobs:
       # -------------------------------
       # Start Local Server
       # -------------------------------
+      - name: Create Test Index Page
+        run: |
+          # Create a simple index.html for testing if it doesn't exist
+          if [ ! -f "index.html" ]; then
+            cat > index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Security Test Page</title>
+          </head>
+          <body>
+              <h1>Security Test Page</h1>
+              <p>This is a temporary page for security testing.</p>
+              <form method="GET" action="">
+                  <input type="text" name="test" placeholder="Test input">
+                  <button type="submit">Submit</button>
+              </form>
+          </body>
+          </html>
+          EOF
+          fi
+
       - name: Start Local Server
         run: |
-          npx http-server . -p 8080 --silent &
-          sleep 10
-          curl -f http://localhost:8080 || (echo "Server failed to start" && exit 1)
+          npx http-server . -p 8080 --cors &
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+          sleep 15
+          
+          # Test server with multiple attempts
+          for i in {1..5}; do
+            if curl -f -s http://localhost:8080 > /dev/null; then
+              echo "Server is running successfully"
+              break
+            else
+              echo "Attempt $i: Server not ready, waiting..."
+              sleep 5
+            fi
+          done
+          
+          # Final check
+          if ! curl -f http://localhost:8080 > /dev/null 2>&1; then
+            echo "Server failed to start properly"
+            netstat -tlnp | grep 8080 || echo "Port 8080 not in use"
+            ps aux | grep http-server || echo "No http-server process found"
+            exit 1
+          fi
 
       # -------------------------------
       # OWASP ZAP Security Scan

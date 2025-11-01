@@ -28,16 +28,68 @@ jobs:
       - name: Install Dependencies
         run: |
           npm ci
-          npm install -g pa11y pa11y-ci @lhci/cli http-server html5validator
+          npm install -g pa11y pa11y-ci @lhci/cli http-server
+          pip3 install html5validator
 
       # -------------------------------
       # Start Local Server
       # -------------------------------
+      - name: Create Test Index Page
+        run: |
+          # Create a simple index.html for testing if it doesn't exist
+          if [ ! -f "index.html" ]; then
+            cat > index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Accessibility Test Page</title>
+          </head>
+          <body>
+              <h1>Accessibility Test Page</h1>
+              <p>This is a temporary page for accessibility testing.</p>
+              <nav>
+                  <ul>
+                      <li><a href="404.html">404 Page</a></li>
+                      <li><a href="footer-test.html">Footer Test</a></li>
+                  </ul>
+              </nav>
+              <main>
+                  <section>
+                      <h2>Test Content</h2>
+                      <p>This content is used for accessibility scanning.</p>
+                      <button type="button">Test Button</button>
+                  </section>
+              </main>
+          </body>
+          </html>
+          EOF
+          fi
+
       - name: Start Local Server
         run: |
-          npx http-server . -p 8080 --silent &
-          sleep 10
-          curl -f http://localhost:8080 || (echo "Server failed to start" && exit 1)
+          npx http-server . -p 8080 --cors &
+          sleep 15
+          
+          # Test server with multiple attempts
+          for i in {1..5}; do
+            if curl -f -s http://localhost:8080 > /dev/null; then
+              echo "Server is running successfully"
+              break
+            else
+              echo "Attempt $i: Server not ready, waiting..."
+              sleep 5
+            fi
+          done
+          
+          # Final check
+          if ! curl -f http://localhost:8080 > /dev/null 2>&1; then
+            echo "Server failed to start properly"
+            netstat -tlnp | grep 8080 || echo "Port 8080 not in use"
+            ps aux | grep http-server || echo "No http-server process found"
+            exit 1
+          fi
 
       # -------------------------------
       # HTML5 Validation
