@@ -30,6 +30,49 @@ jobs:
         run: npm ci
 
       # -------------------------------
+      # Guarantee All Report Files Exist
+      # -------------------------------
+      - name: Create All Fallback Reports
+        run: |
+          echo "Creating guaranteed fallback reports for all security tests..."
+          
+          # Security Headers Report
+          echo "# Security Headers Analysis - Fallback Report" > security-headers-report.md
+          echo "" >> security-headers-report.md
+          echo "Security headers analysis was not completed successfully." >> security-headers-report.md
+          echo "This is a fallback report created to ensure artifact upload succeeds." >> security-headers-report.md
+          
+          # XSS Test Reports
+          echo '{"base_url":"http://localhost:8080","tests_performed":0,"vulnerabilities_found":[],"status":"NOT_TESTED","error":"XSS test fallback report"}' > xss-test-report.json
+          echo "# XSS Vulnerability Test Report - Fallback" > xss-test-report.md
+          echo "" >> xss-test-report.md
+          echo "XSS vulnerability tests were not completed successfully." >> xss-test-report.md
+          echo "This is a fallback report created to ensure artifact upload succeeds." >> xss-test-report.md
+          
+          # SQL Injection Reports
+          echo '{"base_url":"http://localhost:8080","tests_performed":0,"potential_vulnerabilities":[],"status":"NOT_TESTED","error":"SQL injection test fallback report"}' > sql-injection-report.json
+          echo "# SQL Injection Test Report - Fallback" > sql-injection-report.md
+          echo "" >> sql-injection-report.md
+          echo "SQL injection tests were not completed successfully." >> sql-injection-report.md
+          echo "This is a fallback report created to ensure artifact upload succeeds." >> sql-injection-report.md
+          
+          # Web Security Summary
+          echo "# 🛡️ Web Security Scan Summary - Fallback Report" > web-security-summary.md
+          echo "" >> web-security-summary.md
+          echo "Web security scan summary was not generated successfully." >> web-security-summary.md
+          echo "This is a fallback report created to ensure artifact upload succeeds." >> web-security-summary.md
+          echo "" >> web-security-summary.md
+          echo "## Expected Security Tests" >> web-security-summary.md
+          echo "- OWASP ZAP Scans" >> web-security-summary.md
+          echo "- Security Headers Analysis" >> web-security-summary.md
+          echo "- XSS Vulnerability Testing" >> web-security-summary.md
+          echo "- SQL Injection Testing" >> web-security-summary.md
+          
+          # Verify all files were created
+          echo "Verifying fallback report files:"
+          ls -la security-headers-report.md xss-test-report.json xss-test-report.md sql-injection-report.json sql-injection-report.md web-security-summary.md
+
+      # -------------------------------
       # Start Local Server
       # -------------------------------
       - name: Create Test Index Page
@@ -178,11 +221,7 @@ jobs:
       # -------------------------------
       - name: Install Security Headers Checker
         run: npm install -g shcheck
-
-      - name: Create Fallback Security Headers Report
-        run: |
-          # Ensure security headers report always exists
-          echo "# Security Headers Analysis - Not Completed\n\nSecurity headers analysis was not executed successfully." > security-headers-report.md
+        continue-on-error: true
 
       - name: Check Security Headers
         run: |
@@ -262,12 +301,7 @@ jobs:
       - name: Install XSS Testing Tools
         run: |
           pip3 install requests beautifulsoup4 urllib3
-
-      - name: Create Fallback XSS Reports
-        run: |
-          # Ensure XSS report files always exist
-          echo '{"base_url":"http://localhost:8080","tests_performed":0,"vulnerabilities_found":[],"status":"NOT_TESTED","error":"XSS test not completed"}' > xss-test-report.json
-          echo "# XSS Vulnerability Test Report - Not Completed\n\nXSS tests were not executed successfully." > xss-test-report.md
+        continue-on-error: true
 
       - name: Create XSS Testing Script
         run: |
@@ -384,12 +418,6 @@ jobs:
       # -------------------------------
       # SQL Injection Testing
       # -------------------------------
-      - name: Create Fallback SQL Injection Reports
-        run: |
-          # Ensure SQL injection report files always exist
-          echo '{"base_url":"http://localhost:8080","tests_performed":0,"potential_vulnerabilities":[],"status":"NOT_TESTED","error":"SQL injection test not completed"}' > sql-injection-report.json
-          echo "# SQL Injection Test Report - Not Completed\n\nSQL injection tests were not executed successfully." > sql-injection-report.md
-
       - name: Create SQL Injection Test
         run: |
           cat > sql-injection-test.py << 'EOF'
@@ -490,11 +518,6 @@ jobs:
       # -------------------------------
       # Generate Comprehensive Security Report
       # -------------------------------
-      - name: Create Fallback Security Summary
-        run: |
-          # Ensure security summary always exists
-          echo "# 🛡️ Web Security Scan Summary - Not Completed\n\nWeb security scan summary was not generated successfully." > web-security-summary.md
-
       - name: Generate Security Summary
         run: |
           cat > web-security-summary.md << 'EOF'
