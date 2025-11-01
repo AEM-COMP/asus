@@ -202,43 +202,18 @@ jobs:
           echo "All security reports created successfully"
           ls -la security-headers-report.md xss-test-report.json xss-test-report.md sql-injection-report.json sql-injection-report.md web-security-summary.md zap-reports/
 
-      - name: Upload Security Headers Report
+      - name: Upload All Security Reports
         uses: actions/upload-artifact@v4
         with:
-          name: security-headers-report
-          path: security-headers-report.md
-        if: always()
-
-      - name: Upload XSS Test Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: xss-test-reports
+          name: security-scan-reports
           path: |
+            security-headers-report.md
             xss-test-report.json
             xss-test-report.md
-        if: always()
-
-      - name: Upload SQL Injection Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: sql-injection-reports
-          path: |
             sql-injection-report.json
             sql-injection-report.md
-        if: always()
-
-      - name: Upload ZAP Security Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: zap-security-reports  
-          path: zap-reports/
-        if: always()
-
-      - name: Upload Security Summary
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-security-summary
-          path: web-security-summary.md
+            web-security-summary.md
+            zap-reports/
         if: always()
 
       - name: Security Scan Complete
