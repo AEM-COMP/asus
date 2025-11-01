@@ -1,0 +1,12 @@
+{
+  "extends": ["eslint:recommended", "plugin:security/recommended"],
+  "plugins": ["security"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "rules": {
+    "no-eval": "error",
+    "no-implied-eval": "error"
+  }
+}
