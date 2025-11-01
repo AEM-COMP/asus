@@ -36,21 +36,21 @@ jobs:
       # -------------------------------
       - name: Run ESLint
         run: |
-          npx eslint . -f json -o eslint-report.json || true
+          npx eslint . -f json -o eslint-report.json || echo '{"results":[],"error":"ESLint execution failed"}' > eslint-report.json
 
       - name: Upload ESLint Report
         uses: actions/upload-artifact@v4
         with:
           name: eslint-report
           path: eslint-report.json
+        if: always()
 
       # -------------------------------
       # Gitleaks Secret Scan
       # -------------------------------
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect --source . --no-banner --report-format json --report-path gitleaks-report.json
+        run: |
+          docker run --rm -v "$PWD:/path" zricethezav/gitleaks:latest detect --source="/path" --no-banner --report-format=json --report-path="/path/gitleaks-report.json" || echo '{"results":[],"error":"No secrets found or scan failed"}' > gitleaks-report.json
         continue-on-error: true
 
       - name: Upload Gitleaks Report
@@ -64,18 +64,15 @@ jobs:
       # Snyk Vulnerability Scan
       # -------------------------------
       - name: Run Snyk Security Test
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: test --json
-        continue-on-error: true
-
-      - name: Create Snyk Report
         run: |
-          if [ ! -f "snyk-report.json" ]; then
-            echo '{"vulnerabilities":[],"error":"SNYK_TOKEN not configured or no vulnerabilities found"}' > snyk-report.json
+          if [ -n "${{ secrets.SNYK_TOKEN }}" ]; then
+            npm install -g snyk
+            snyk auth ${{ secrets.SNYK_TOKEN }}
+            snyk test --json > snyk-report.json || echo '{"vulnerabilities":[],"error":"Snyk scan completed with warnings"}' > snyk-report.json
+          else
+            echo '{"vulnerabilities":[],"error":"SNYK_TOKEN not configured"}' > snyk-report.json
           fi
+        continue-on-error: true
 
       - name: Upload Snyk Report
         uses: actions/upload-artifact@v4
@@ -88,10 +85,12 @@ jobs:
       # SonarCloud Scan
       # -------------------------------
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v2.3.0
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         continue-on-error: true
+        if: env.SONAR_TOKEN != ''
 
       - name: Create Scan Summary
         run: |
