@@ -96,7 +96,17 @@ jobs:
       # -------------------------------
       - name: HTML5 Validation
         run: |
-          html5validator --root . --also-check-css --format json --output html5-validation-report.json || echo '{"messages":[],"error":"HTML5 validation completed with warnings"}' > html5-validation-report.json
+          # Ensure report file always exists
+          touch html5-validation-report.json
+          echo "Running HTML5 validation..."
+          html5validator --root . --also-check-css --format json --output html5-validation-report.json || {
+            echo "HTML5 validation failed or completed with warnings, creating fallback report"
+            echo '{"messages":[],"error":"HTML5 validation failed or completed with warnings","timestamp":"'$(date)'"}' > html5-validation-report.json
+          }
+          # Verify file exists and has content
+          ls -la html5-validation-report.json
+          echo "HTML5 validation report content:"
+          cat html5-validation-report.json
 
       - name: Upload HTML5 Validation Report
         uses: actions/upload-artifact@v4
