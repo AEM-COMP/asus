@@ -121,29 +121,61 @@ jobs:
       - name: Run Pa11y Accessibility Tests
         run: |
           echo "Testing main pages for accessibility..."
+          
+          # Ensure pa11y is properly installed
+          npm list -g pa11y || npm install -g pa11y
+          
+          # Test server connectivity
+          curl -f http://localhost:8080 || exit 1
+          
+          # Create fallback report first
+          echo '{"results":[],"error":"Pa11y test not completed","timestamp":"'$(date)'"}' > pa11y-home-report.json
+          
+          # Run Pa11y test with better error handling
           pa11y http://localhost:8080 \
             --standard WCAG2AA \
             --reporter json \
             --timeout 30000 \
-            --ignore "color-contrast" > pa11y-home-report.json || true
+            --ignore "color-contrast" > pa11y-home-report.json || {
+              echo "Pa11y home test failed, creating detailed fallback report"
+              echo '{"results":[{"message":"Pa11y accessibility test failed or completed with warnings","context":"http://localhost:8080","selector":"body","type":"error"}],"documentTitle":"Test Page","pageUrl":"http://localhost:8080","timestamp":"'$(date)'"}' > pa11y-home-report.json
+            }
+          
+          # Verify and display report content
+          echo "Pa11y home report content:"
+          cat pa11y-home-report.json | head -20
           
           # Test other key pages if they exist
           for page in "404.html" "footer-test.html"; do
             if [ -f "$page" ]; then
               echo "Testing $page..."
+              report_name="pa11y-$(basename $page .html)-report.json"
+              echo '{"results":[],"error":"Pa11y test not completed","timestamp":"'$(date)'"}' > "$report_name"
+              
               pa11y "http://localhost:8080/$page" \
                 --standard WCAG2AA \
                 --reporter json \
                 --timeout 30000 \
-                --ignore "color-contrast" > "pa11y-$(basename $page .html)-report.json" || true
+                --ignore "color-contrast" > "$report_name" || {
+                  echo "Pa11y test failed for $page, creating fallback report"
+                  echo '{"results":[{"message":"Pa11y accessibility test failed for '$page'","context":"http://localhost:8080/'$page'","selector":"body","type":"error"}],"documentTitle":"'$page'","pageUrl":"http://localhost:8080/'$page'","timestamp":"'$(date)'"}' > "$report_name"
+                }
+                
+              echo "Pa11y $page report content:"
+              cat "$report_name" | head -10
             fi
           done
+          
+          # List all generated reports
+          echo "Generated Pa11y reports:"
+          ls -la pa11y-*-report.json
 
       - name: Upload Pa11y Reports
         uses: actions/upload-artifact@v4
         with:
           name: pa11y-accessibility-reports
           path: pa11y-*-report.json
+        if: always()
 
       # -------------------------------
       # Lighthouse CI Accessibility Audit
