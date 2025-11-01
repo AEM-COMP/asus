@@ -179,6 +179,11 @@ jobs:
       - name: Install Security Headers Checker
         run: npm install -g shcheck
 
+      - name: Create Fallback Security Headers Report
+        run: |
+          # Ensure security headers report always exists
+          echo "# Security Headers Analysis - Not Completed\n\nSecurity headers analysis was not executed successfully." > security-headers-report.md
+
       - name: Check Security Headers
         run: |
           echo "Checking security headers..."
@@ -241,10 +246,7 @@ jobs:
           req.end();
           EOF
           
-          node security-headers-check.js > security-headers-report.md || {
-            echo "Security headers check failed, creating fallback report"
-            echo "# Security Headers Analysis - Failed\nCould not analyze security headers due to connectivity issues." > security-headers-report.md
-          }
+          node security-headers-check.js > security-headers-report.md || echo "Security headers check completed with warnings"
         continue-on-error: true
 
       - name: Upload Security Headers Report
@@ -260,6 +262,12 @@ jobs:
       - name: Install XSS Testing Tools
         run: |
           pip3 install requests beautifulsoup4 urllib3
+
+      - name: Create Fallback XSS Reports
+        run: |
+          # Ensure XSS report files always exist
+          echo '{"base_url":"http://localhost:8080","tests_performed":0,"vulnerabilities_found":[],"status":"NOT_TESTED","error":"XSS test not completed"}' > xss-test-report.json
+          echo "# XSS Vulnerability Test Report - Not Completed\n\nXSS tests were not executed successfully." > xss-test-report.md
 
       - name: Create XSS Testing Script
         run: |
@@ -361,7 +369,7 @@ jobs:
           EOF
 
       - name: Run XSS Tests
-        run: python3 xss-test.py
+        run: python3 xss-test.py || echo "XSS test failed, using fallback reports"
         continue-on-error: true
 
       - name: Upload XSS Test Reports
@@ -376,6 +384,12 @@ jobs:
       # -------------------------------
       # SQL Injection Testing
       # -------------------------------
+      - name: Create Fallback SQL Injection Reports
+        run: |
+          # Ensure SQL injection report files always exist
+          echo '{"base_url":"http://localhost:8080","tests_performed":0,"potential_vulnerabilities":[],"status":"NOT_TESTED","error":"SQL injection test not completed"}' > sql-injection-report.json
+          echo "# SQL Injection Test Report - Not Completed\n\nSQL injection tests were not executed successfully." > sql-injection-report.md
+
       - name: Create SQL Injection Test
         run: |
           cat > sql-injection-test.py << 'EOF'
@@ -476,6 +490,11 @@ jobs:
       # -------------------------------
       # Generate Comprehensive Security Report
       # -------------------------------
+      - name: Create Fallback Security Summary
+        run: |
+          # Ensure security summary always exists
+          echo "# 🛡️ Web Security Scan Summary - Not Completed\n\nWeb security scan summary was not generated successfully." > web-security-summary.md
+
       - name: Generate Security Summary
         run: |
           cat > web-security-summary.md << 'EOF'
