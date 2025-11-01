@@ -205,7 +205,7 @@ jobs:
       - name: Upload All Security Reports
         uses: actions/upload-artifact@v4
         with:
-          name: security-scan-reports
+          name: web-security-reports
           path: |
             security-headers-report.md
             xss-test-report.json
