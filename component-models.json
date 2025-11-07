@@ -799,7 +799,7 @@
     },
     {
       "component": "richtext",
-      "name": "config",
+      "name": "configSecondColumn",
       "value": "",
       "label": "Footer Second Column Config Menu",
       "valueType": "string",
@@ -814,7 +814,7 @@
     },
     {
       "component": "richtext",
-      "name": "config",
+      "name": "configThirdColumn",
       "value": "",
       "label": "Footer Third Column Config Menu",
       "valueType": "string",
