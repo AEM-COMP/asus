@@ -780,7 +780,7 @@
         "name": "socialLinks",
         "label": "Social Media Icons",
         "description": "Select Social icon image from DAM",
-        "multi": true
+        "multi": false
       },
       {
         "component": "richtext",
