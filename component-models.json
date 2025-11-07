@@ -760,6 +760,13 @@
         "value": "Sign up"
       },
       {
+        "component": "boolean",
+        "name": "showLangSelector",
+        "label": "Show Language Selector",
+        "description": "Select to show global slector",
+        "valueType": "boolean"
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "socialLabel",
@@ -767,149 +774,38 @@
         "description": "Label text for social media section",
         "value": "Follow us at:"
       },
-      {
-        "component": "container",
-        "name": "socialLinks",
-        "label": "Social Media Links",
-        "description": "Social media platform links",
-        "multi": true,
-        "fields": [
-          {
-            "component": "select",
-            "name": "platform",
-            "label": "Platform",
-            "options": [
-              {
-                "name": "Facebook",
-                "value": "facebook"
-              },
-              {
-                "name": "Twitter/X",
-                "value": "x"
-              },
-              {
-                "name": "Discord",
-                "value": "discord"
-              },
-              {
-                "name": "YouTube",
-                "value": "youtube"
-              },
-              {
-                "name": "Twitch",
-                "value": "twitch"
-              },
-              {
-                "name": "Instagram",
-                "value": "instagram"
-              },
-              {
-                "name": "TikTok",
-                "value": "tiktok"
-              },
-              {
-                "name": "Threads",
-                "value": "thread"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "url",
-            "label": "Platform URL",
-            "description": "URL for the social media platform"
-          },
-          {
-            "component": "reference",
-            "name": "icon",
-            "label": "Platform Icon",
-            "description": "Select icon from DAM for this social platform",
-            "multi": false
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "altText",
-            "label": "Icon Alt Text",
-            "description": "Alternative text for the platform icon"
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "footerColumns",
-        "label": "Footer Navigation Columns",
-        "description": "Footer navigation link columns",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "columnTitle",
-            "label": "Column Title",
-            "description": "Title for this footer column"
-          },
-          {
-            "component": "container",
-            "name": "links",
-            "label": "Column Links",
-            "description": "Links for this column",
-            "multi": true,
-            "fields": [
-              {
-                "component": "text",
-                "valueType": "string",
-                "name": "linkText",
-                "label": "Link Text",
-                "description": "Display text for the link"
-              },
-              {
-                "component": "aem-content",
-                "name": "linkUrl",
-                "label": "Link URL",
-                "description": "URL for the link"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "globalText",
-        "label": "Global/Language Text",
-        "description": "Text for global/language selector",
-        "value": "Global / English"
-      },
+
       {
         "component": "reference",
-        "name": "globalIcon",
-        "label": "Global/Language Icon",
-        "description": "Select icon from DAM for global/language selector",
-        "multi": false,
-        "value": "/icons/Global.svg"
+        "name": "socialLinks",
+        "label": "Social Media Icons",
+        "description": "Select Social icon image from DAM",
+        "multi": true
       },
       {
-        "component": "container",
-        "name": "legalLinks",
-        "label": "Legal Links",
-        "description": "Bottom footer legal links",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "linkText",
-            "label": "Link Text",
-            "description": "Display text for the legal link"
-          },
-          {
-            "component": "aem-content",
-            "name": "linkUrl",
-            "label": "Link URL",
-            "description": "URL for the legal link"
-          }
-        ]
+        "component": "richtext",
+        "name": "iconLinks",
+        "value": "",
+        "label": "Social Icons Urls",
+        "description": "Add in the same sequence as social icons",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "config",
+        "value": "",
+        "label": "Footer Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "copyrightLinks",
+        "value": "",
+        "label": "Copyright Links for Footer",
+        "valueType": "string",
+        "required": true
       }
     ]
   },
