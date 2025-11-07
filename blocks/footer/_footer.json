@@ -1,226 +1,86 @@
 {
-  "title": "Footer",
-  "description": "Footer block with newsletter signup, social media links, navigation columns, and legal links",
-  "lastModified": "2024-10-18",
-  "author": "ASUS",
-  "template": {
-    "newsletterLabel": "Get the latest deals and more",
-    "newsletterPlaceholder": "Enter email address",
-    "newsletterButtonText": "Sign up",
-    "socialLabel": "Follow us at:",
-    "socialLinks": [
-      {
-        "platform": "facebook",
-        "url": "#",
-        "icon": "/icons/social/icon-facebook.svg",
-        "altText": "Facebook"
-      },
-      {
-        "platform": "x",
-        "url": "#",
-        "icon": "/icons/social/icon-x.svg",
-        "altText": "Twitter"
-      },
-      {
-        "platform": "discord",
-        "url": "#",
-        "icon": "/icons/social/icon-discord.svg",
-        "altText": "Discord"
-      },
-      {
-        "platform": "youtube",
-        "url": "#",
-        "icon": "/icons/social/icon-youtube.svg",
-        "altText": "YouTube"
-      },
-      {
-        "platform": "twitch",
-        "url": "#",
-        "icon": "/icons/social/icon-twitch.svg",
-        "altText": "Twitch"
-      },
-      {
-        "platform": "instagram",
-        "url": "#",
-        "icon": "/icons/social/icon-instagram.svg",
-        "altText": "Instagram"
-      },
-      {
-        "platform": "tiktok",
-        "url": "#",
-        "icon": "/icons/social/icon-tiktok.svg",
-        "altText": "TikTok"
-      },
-      {
-        "platform": "thread",
-        "url": "#",
-        "icon": "/icons/social/icon-thread.svg",
-        "altText": "Threads"
+  "definitions": [
+  {
+    "title": "Footer",
+    "id": "footer",
+    "plugins": {
+      "xwalk": {
+        "page": {
+          "resourceType": "core/franklin/components/block/v1/block",
+          "template": {
+            "name": "Footer",
+            "model": "footer"
+          }
+        }
       }
-    ],
-    "footerColumns": [
+    }
+  }
+  ],
+  "models": [
+    {
+    "id": "footer",
+    "fields": [
       {
-        "columnTitle": "Shop",
-        "links": [
-          {
-            "linkText": "All Desktops",
-            "linkUrl": "#"
-          }
-        ]
+        "component": "text",
+        "valueType": "string",
+        "name": "titleSubscription",
+        "label": "Title For Subscription Section",
+        "description": "Title For Subscription Section"
       },
       {
-        "columnTitle": "Support",
-        "links": [
-          {
-            "linkText": "Help Me Choose",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Contact Us",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Shopping FAQs",
-            "linkUrl": "#"
-          }
-        ]
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "label": "Placeholder for Form Field",
+        "description": "Placeholder to Give Email"
       },
       {
-        "columnTitle": "Support",
-        "links": [
-          {
-            "linkText": "Help Me Choose",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Education & Commercial Inquiries",
-            "linkUrl": "#"
-          }
-        ]
-      }
-    ],
-    "globalText": "Global / English",
-    "globalIcon": "/icons/Global.svg",
-    "legalLinks": [
-      {
-        "linkText": "Privacy Policy",
-        "linkUrl": "#"
+        "component": "text",
+        "valueType": "string",
+        "name": "buttonText",
+        "label": "Label For Subscription Button",
+        "description": "Label For Subscription Button"
       },
       {
-        "linkText": "Terms & Conditions",
-        "linkUrl": "#"
+        "component": "text",
+        "valueType": "string",
+        "name": "socialTitle",
+        "label": "Title for Social Icon Section",
+        "description": "Title for Social Icon Section"
       },
       {
-        "linkText": "Cookie Settings",
-        "linkUrl": "#"
+        "component": "reference",
+        "name": "socialIcons",
+        "label": "Social Icons",
+        "description": "Select Social icon image from DAM",
+        "multi": true
+      },
+      {
+        "component": "richtext",
+        "name": "iconLinks",
+        "value": "",
+        "label": "Social Icons Urls",
+        "description": "Add in the same sequence as social icons",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "config",
+        "value": "",
+        "label": "Footer Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "copyrightLinks",
+        "value": "",
+        "label": "Copyright Links for Footer",
+        "valueType": "string",
+        "required": true
       }
     ]
-  },
-  "fields": [
-    {
-      "name": "newsletterLabel",
-      "type": "text",
-      "required": false,
-      "default": "Get the latest deals and more"
-    },
-    {
-      "name": "newsletterPlaceholder",
-      "type": "text",
-      "required": false,
-      "default": "Enter email address"
-    },
-    {
-      "name": "newsletterButtonText",
-      "type": "text",
-      "required": false,
-      "default": "Sign up"
-    },
-    {
-      "name": "socialLabel",
-      "type": "text",
-      "required": false,
-      "default": "Follow us at:"
-    },
-    {
-      "name": "socialLinks",
-      "type": "array",
-      "required": false,
-      "fields": [
-        {
-          "name": "platform",
-          "type": "select",
-          "options": ["facebook", "x", "discord", "youtube", "twitch", "instagram", "tiktok", "thread"]
-        },
-        {
-          "name": "url",
-          "type": "text"
-        },
-        {
-          "name": "icon",
-          "type": "media",
-          "required": false,
-          "description": "Select icon from DAM"
-        },
-        {
-          "name": "altText",
-          "type": "text",
-          "required": false,
-          "description": "Alternative text for the icon"
-        }
-      ]
-    },
-    {
-      "name": "footerColumns",
-      "type": "array",
-      "required": false,
-      "fields": [
-        {
-          "name": "columnTitle",
-          "type": "text"
-        },
-        {
-          "name": "links",
-          "type": "array",
-          "fields": [
-            {
-              "name": "linkText",
-              "type": "text"
-            },
-            {
-              "name": "linkUrl",
-              "type": "text"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "globalText",
-      "type": "text",
-      "required": false,
-      "default": "Global / English"
-    },
-    {
-      "name": "globalIcon",
-      "type": "media",
-      "required": false,
-      "description": "Select global icon from DAM",
-      "default": "/icons/Global.svg"
-    },
-    {
-      "name": "legalLinks",
-      "type": "array",
-      "required": false,
-      "fields": [
-        {
-          "name": "linkText",
-          "type": "text"
-        },
-        {
-          "name": "linkUrl",
-          "type": "text"
-        }
-      ]
-    }
+  }
   ]
 }
