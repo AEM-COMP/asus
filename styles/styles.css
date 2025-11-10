@@ -2344,6 +2344,23 @@ select.error {
 [data-section-with-bottom-spacing="pb-20"] { padding-bottom: var(--spacing-20) !important; }
 [data-section-with-bottom-spacing="pb-24"] { padding-bottom: var(--spacing-24) !important; }
 
+/* Backward Compatibility - Old padding field names */
+[data-paddingtop="pt-1"] { padding-top: var(--spacing-1) !important; }
+[data-paddingtop="pt-4"] { padding-top: var(--spacing-4) !important; }
+[data-paddingtop="pt-8"] { padding-top: var(--spacing-8) !important; }
+[data-paddingtop="pt-12"] { padding-top: var(--spacing-12) !important; }
+[data-paddingtop="pt-16"] { padding-top: var(--spacing-16) !important; }
+[data-paddingtop="pt-20"] { padding-top: var(--spacing-20) !important; }
+[data-paddingtop="pt-24"] { padding-top: var(--spacing-24) !important; }
+
+[data-paddingbottom="pb-1"] { padding-bottom: var(--spacing-1) !important; }
+[data-paddingbottom="pb-4"] { padding-bottom: var(--spacing-4) !important; }
+[data-paddingbottom="pb-8"] { padding-bottom: var(--spacing-8) !important; }
+[data-paddingbottom="pb-12"] { padding-bottom: var(--spacing-12) !important; }
+[data-paddingbottom="pb-16"] { padding-bottom: var(--spacing-16) !important; }
+[data-paddingbottom="pb-20"] { padding-bottom: var(--spacing-20) !important; }
+[data-paddingbottom="pb-24"] { padding-bottom: var(--spacing-24) !important; }
+
 /* ========================================================================== 
  * Responsive Spacing Behavior - Following webpack SCSS pattern
  * 50% scaling on mobile/tablet (< 1024px) with author control options
