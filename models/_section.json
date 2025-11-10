@@ -27,87 +27,7 @@
         },
         {
           "component": "select",
-          "name": "marginTop",
-          "label": "Top Margin",
-          "description": "Add top margin to the section",
-          "options": [
-            {
-              "name": "None",
-              "value": ""
-            },
-            {
-              "name": "Small (4px)",
-              "value": "mt-1"
-            },
-            {
-              "name": "Medium (16px)",
-              "value": "mt-4"
-            },
-            {
-              "name": "Large (32px)",
-              "value": "mt-8"
-            },
-            {
-              "name": "Extra Large (48px)",
-              "value": "mt-12"
-            },
-            {
-              "name": "XXL (64px)",
-              "value": "mt-16"
-            },
-            {
-              "name": "XXXL (80px)",
-              "value": "mt-20"
-            },
-            {
-              "name": "XXXXL (96px)",
-              "value": "mt-24"
-            }
-          ]
-        },
-        {
-          "component": "select",
-          "name": "marginBottom",
-          "label": "Bottom Margin",
-          "description": "Add bottom margin to the section",
-          "options": [
-            {
-              "name": "None",
-              "value": ""
-            },
-            {
-              "name": "Small (4px)",
-              "value": "mb-1"
-            },
-            {
-              "name": "Medium (16px)",
-              "value": "mb-4"
-            },
-            {
-              "name": "Large (32px)",
-              "value": "mb-8"
-            },
-            {
-              "name": "Extra Large (48px)",
-              "value": "mb-12"
-            },
-            {
-              "name": "XXL (64px)",
-              "value": "mb-16"
-            },
-            {
-              "name": "XXXL (80px)",
-              "value": "mb-20"
-            },
-            {
-              "name": "XXXXL (96px)",
-              "value": "mb-24"
-            }
-          ]
-        },
-        {
-          "component": "select",
-          "name": "paddingTop",
+          "name": "section-with-bottom-spacing",
           "label": "Top Padding",
           "description": "Add top padding to the section",
           "options": [
@@ -187,49 +107,21 @@
         },
         {
           "component": "select",
-          "name": "backgroundColor",
-          "label": "Background Color",
-          "description": "Set the background color for the section",
+          "name": "responsiveScaling",
+          "label": "Mobile Spacing Behavior",
+          "description": "How spacing should behave on mobile devices (< 1024px)",
           "options": [
             {
-              "name": "None",
-              "value": ""
+              "name": "Auto Scale (50% on mobile)",
+              "value": "auto"
             },
             {
-              "name": "White",
-              "value": "bg-white"
+              "name": "Same on All Devices",
+              "value": "fixed"
             },
             {
-              "name": "Black",
-              "value": "bg-black"
-            },
-            {
-              "name": "Primary Brand",
-              "value": "bg-primary"
-            },
-            {
-              "name": "Light Grey",
-              "value": "bg-primary-900"
-            },
-            {
-              "name": "Medium Grey",
-              "value": "bg-primary-700"
-            },
-            {
-              "name": "Dark Grey",
-              "value": "bg-primary-200"
-            },
-            {
-              "name": "Info Blue",
-              "value": "bg-info"
-            },
-            {
-              "name": "Success Green",
-              "value": "bg-success"
-            },
-            {
-              "name": "Warning Orange",
-              "value": "bg-warning"
+              "name": "Zero on Mobile",
+              "value": "zero"
             }
           ]
         },
