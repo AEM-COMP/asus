@@ -1,8 +1,3 @@
-> **🔗 Repository:** [asus](https://github.com/AEM-COMP/asus)  
-> **📋 Commit:** [`980a6e6`](https://github.com/AEM-COMP/asus/commit/980a6e6172719cc9ac538b9a244bd53917eff19f)  
-> **📅 Scan Date:** 2025-12-08 11:50 UTC  
-
-
 # 🛡️ Comprehensive Security & Accessibility Report
 
 **Generated:** Mon Dec  8 11:50:20 UTC 2025  
