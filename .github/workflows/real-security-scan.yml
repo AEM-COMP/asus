@@ -2,9 +2,9 @@ name: 🛡️ Real Security & Accessibility Scan
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,8 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      actions: read
+      id-token: write
 
     steps:
       - name: Checkout Code
