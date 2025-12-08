@@ -10,6 +10,7 @@ This directory contains comprehensive security and accessibility reports generat
 
 | Date | Report | Overall Score | Status |
 |------|--------|---------------|---------|
+| 2025-12-08 12:34 | [View Report](security-report-2025-12-08_12-34.md) | 92/100 | ✅ Excellent |
 | 2025-12-08 12:22 | [View Report](security-report-2025-12-08_12-22.md) | 92/100 | ✅ Excellent |
 | 2025-12-08 12:14 | [View Report](security-report-2025-12-08_12-14.md) | 92/100 | ✅ Excellent |
 | 2025-12-08 12:03 | [View Report](security-report-2025-12-08_12-03.md) | 92/100 | ✅ Excellent |
@@ -19,7 +20,6 @@ This directory contains comprehensive security and accessibility reports generat
 | 2025-11-07 12:05 | [View Report](security-report-2025-11-07_12-05.md) | 92/100 | ✅ Excellent |
 | 2025-11-07 11:51 | [View Report](security-report-2025-11-07_11-51.md) | 92/100 | ✅ Excellent |
 | 2025-11-02 14:42 | [View Report](security-report-2025-11-02_14-42.md) | 92/100 | ✅ Excellent |
-| 2025-11-02 14:00 | [View Report](security-report-2025-11-02_14-00.md) | 92/100 | ✅ Excellent |
 
 ## 🔗 Quick Links
 
