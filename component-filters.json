@@ -62,5 +62,11 @@
       "components": [
         "carousel-slide"
       ]
+    },
+     {
+      "id": "footer",
+      "components": [
+        "footer-icon"
+      ]
     }
 ]

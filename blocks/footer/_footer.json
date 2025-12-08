@@ -1,225 +1,149 @@
+
 {
-  "title": "Footer",
-  "description": "Footer block with newsletter signup, social media links, navigation columns, and legal links",
-  "lastModified": "2024-10-18",
-  "author": "ASUS",
-  "template": {
-    "newsletterLabel": "Get the latest deals and more",
-    "newsletterPlaceholder": "Enter email address",
-    "newsletterButtonText": "Sign up",
-    "socialLabel": "Follow us at:",
-    "socialLinks": [
-      {
-        "platform": "facebook",
-        "url": "#",
-        "icon": "/icons/social/icon-facebook.svg",
-        "altText": "Facebook"
-      },
-      {
-        "platform": "x",
-        "url": "#",
-        "icon": "/icons/social/icon-x.svg",
-        "altText": "Twitter"
-      },
-      {
-        "platform": "discord",
-        "url": "#",
-        "icon": "/icons/social/icon-discord.svg",
-        "altText": "Discord"
-      },
-      {
-        "platform": "youtube",
-        "url": "#",
-        "icon": "/icons/social/icon-youtube.svg",
-        "altText": "YouTube"
-      },
-      {
-        "platform": "twitch",
-        "url": "#",
-        "icon": "/icons/social/icon-twitch.svg",
-        "altText": "Twitch"
-      },
-      {
-        "platform": "instagram",
-        "url": "#",
-        "icon": "/icons/social/icon-instagram.svg",
-        "altText": "Instagram"
-      },
-      {
-        "platform": "tiktok",
-        "url": "#",
-        "icon": "/icons/social/icon-tiktok.svg",
-        "altText": "TikTok"
-      },
-      {
-        "platform": "thread",
-        "url": "#",
-        "icon": "/icons/social/icon-thread.svg",
-        "altText": "Threads"
+  "definitions": [
+  {
+    "title": "Footer",
+    "id": "footer",
+    "plugins": {
+      "xwalk": {
+        "page": {
+          "resourceType": "core/franklin/components/block/v1/block",
+          "template": {
+            "name": "Footer",
+            "model": "footer",
+            "filter": "footer"
+          }
+        }
       }
-    ],
-    "footerColumns": [
-      {
-        "columnTitle": "Shop",
-        "links": [
-          {
-            "linkText": "All Desktops",
-            "linkUrl": "#"
+    }
+  },
+  {
+      "title": "Footer Icon",
+      "id": "footer-icon",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Icon",
+              "model": "footer-icon"
+            }
           }
-        ]
-      },
-      {
-        "columnTitle": "Support",
-        "links": [
-          {
-            "linkText": "Help Me Choose",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Contact Us",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Shopping FAQs",
-            "linkUrl": "#"
-          }
-        ]
-      },
-      {
-        "columnTitle": "Support",
-        "links": [
-          {
-            "linkText": "Help Me Choose",
-            "linkUrl": "#"
-          },
-          {
-            "linkText": "Education & Commercial Inquiries",
-            "linkUrl": "#"
-          }
-        ]
+        }
       }
-    ],
-    "globalText": "Global / English",
-    "globalIcon": "/icons/Global.svg",
-    "legalLinks": [
+    }
+  ],
+  "models": [
+    {
+    "id": "footer",
+    "fields": [
       {
-        "linkText": "Privacy Policy",
-        "linkUrl": "#"
+        "component": "text",
+        "valueType": "string",
+        "name": "titleSubscription",
+        "label": "Title For Subscription Section",
+        "description": "Title For Subscription Section"
       },
       {
-        "linkText": "Terms & Conditions",
-        "linkUrl": "#"
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "label": "Placeholder for Form Field",
+        "description": "Placeholder to Give Email"
       },
       {
-        "linkText": "Cookie Settings",
-        "linkUrl": "#"
+        "component": "text",
+        "valueType": "string",
+        "name": "buttonText",
+        "label": "Label For Subscription Button",
+        "description": "Label For Subscription Button"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "socialTitle",
+        "label": "Title for Social Icon Section",
+        "description": "Title for Social Icon Section"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "titleFirstColumn",
+        "label": "Title For First Column",
+        "description": "Title For First Column"
+      },
+      {
+        "component": "richtext",
+        "name": "config",
+        "value": "",
+        "label": "Footer First Column Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "titleSecondColumn",
+        "label": "Title For Second Column",
+        "description": "Title For Second Column"
+      },
+      {
+        "component": "richtext",
+        "name": "configSecondColumn",
+        "value": "",
+        "label": "Footer Second Column Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "titleThirdColumn",
+        "label": "Title For Third Column",
+        "description": "Title For Third Column"
+      },
+      {
+        "component": "richtext",
+        "name": "configThirdColumn",
+        "value": "",
+        "label": "Footer Third Column Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "copyrightLinks",
+        "value": "",
+        "label": "Copyright Links for Footer",
+        "valueType": "string",
+        "required": true
       }
     ]
   },
-  "fields": [
-    {
-      "name": "newsletterLabel",
-      "type": "text",
-      "required": false,
-      "default": "Get the latest deals and more"
-    },
-    {
-      "name": "newsletterPlaceholder",
-      "type": "text",
-      "required": false,
-      "default": "Enter email address"
-    },
-    {
-      "name": "newsletterButtonText",
-      "type": "text",
-      "required": false,
-      "default": "Sign up"
-    },
-    {
-      "name": "socialLabel",
-      "type": "text",
-      "required": false,
-      "default": "Follow us at:"
-    },
-    {
-      "name": "socialLinks",
-      "type": "array",
-      "required": false,
+  {
+      "id": "footer-icon",
       "fields": [
         {
-          "name": "platform",
-          "type": "select",
-          "options": ["facebook", "x", "discord", "youtube", "twitch", "instagram", "tiktok", "thread"]
+          "component": "reference",
+          "valueType": "string",
+          "name": "iconImage",
+          "label": "Icon Image",
+          "multi": false
         },
         {
-          "name": "url",
-          "type": "text"
-        },
-        {
-          "name": "icon",
-          "type": "media",
-          "required": false,
-          "description": "Select icon from DAM"
-        },
-        {
-          "name": "altText",
-          "type": "text",
-          "required": false,
-          "description": "Alternative text for the icon"
+        "component": "aem-content",
+        "name": "iconURL",
+        "label": "Footer Icon URL",
+        "description": "URL the Footer Icon should link to"
         }
       ]
-    },
+    }
+  ],
+   "filters": [
     {
-      "name": "footerColumns",
-      "type": "array",
-      "required": false,
-      "fields": [
-        {
-          "name": "columnTitle",
-          "type": "text"
-        },
-        {
-          "name": "links",
-          "type": "array",
-          "fields": [
-            {
-              "name": "linkText",
-              "type": "text"
-            },
-            {
-              "name": "linkUrl",
-              "type": "text"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "globalText",
-      "type": "text",
-      "required": false,
-      "default": "Global / English"
-    },
-    {
-      "name": "globalIcon",
-      "type": "media",
-      "required": false,
-      "description": "Select global icon from DAM",
-      "default": "/icons/Global.svg"
-    },
-    {
-      "name": "legalLinks",
-      "type": "array",
-      "required": false,
-      "fields": [
-        {
-          "name": "linkText",
-          "type": "text"
-        },
-        {
-          "name": "linkUrl",
-          "type": "text"
-        }
+      "id": "footer",
+      "components": [
+        "footer-icon"
       ]
     }
   ]

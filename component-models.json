@@ -728,187 +728,110 @@
       }
     ]
   },
-  {
+   {
     "id": "footer",
     "fields": [
       {
         "component": "text",
         "valueType": "string",
-        "name": "newsletterLabel",
-        "label": "Newsletter Label",
-        "description": "Label text for newsletter signup",
-        "value": "Get the latest deals and more"
+        "name": "titleSubscription",
+        "label": "Title For Subscription Section",
+        "description": "Title For Subscription Section"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "newsletterPlaceholder",
-        "label": "Newsletter Email Placeholder",
-        "description": "Placeholder text for email input",
-        "value": "Enter email address"
+        "name": "placeholder",
+        "label": "Placeholder for Form Field",
+        "description": "Placeholder to Give Email"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "newsletterButtonText",
-        "label": "Newsletter Button Text",
-        "description": "Text for newsletter signup button",
-        "value": "Sign up"
+        "name": "buttonText",
+        "label": "Label For Subscription Button",
+        "description": "Label For Subscription Button"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "socialLabel",
-        "label": "Social Media Label",
-        "description": "Label text for social media section",
-        "value": "Follow us at:"
-      },
-      {
-        "component": "container",
-        "name": "socialLinks",
-        "label": "Social Media Links",
-        "description": "Social media platform links",
-        "multi": true,
-        "fields": [
-          {
-            "component": "select",
-            "name": "platform",
-            "label": "Platform",
-            "options": [
-              {
-                "name": "Facebook",
-                "value": "facebook"
-              },
-              {
-                "name": "Twitter/X",
-                "value": "x"
-              },
-              {
-                "name": "Discord",
-                "value": "discord"
-              },
-              {
-                "name": "YouTube",
-                "value": "youtube"
-              },
-              {
-                "name": "Twitch",
-                "value": "twitch"
-              },
-              {
-                "name": "Instagram",
-                "value": "instagram"
-              },
-              {
-                "name": "TikTok",
-                "value": "tiktok"
-              },
-              {
-                "name": "Threads",
-                "value": "thread"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "url",
-            "label": "Platform URL",
-            "description": "URL for the social media platform"
-          },
-          {
-            "component": "reference",
-            "name": "icon",
-            "label": "Platform Icon",
-            "description": "Select icon from DAM for this social platform",
-            "multi": false
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "altText",
-            "label": "Icon Alt Text",
-            "description": "Alternative text for the platform icon"
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "footerColumns",
-        "label": "Footer Navigation Columns",
-        "description": "Footer navigation link columns",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "columnTitle",
-            "label": "Column Title",
-            "description": "Title for this footer column"
-          },
-          {
-            "component": "container",
-            "name": "links",
-            "label": "Column Links",
-            "description": "Links for this column",
-            "multi": true,
-            "fields": [
-              {
-                "component": "text",
-                "valueType": "string",
-                "name": "linkText",
-                "label": "Link Text",
-                "description": "Display text for the link"
-              },
-              {
-                "component": "aem-content",
-                "name": "linkUrl",
-                "label": "Link URL",
-                "description": "URL for the link"
-              }
-            ]
-          }
-        ]
+        "name": "socialTitle",
+        "label": "Title for Social Icon Section",
+        "description": "Title for Social Icon Section"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "globalText",
-        "label": "Global/Language Text",
-        "description": "Text for global/language selector",
-        "value": "Global / English"
+        "name": "titleFirstColumn",
+        "label": "Title For First Column",
+        "description": "Title For First Column"
       },
       {
-        "component": "reference",
-        "name": "globalIcon",
-        "label": "Global/Language Icon",
-        "description": "Select icon from DAM for global/language selector",
-        "multi": false,
-        "value": "/icons/Global.svg"
+        "component": "richtext",
+        "name": "config",
+        "value": "",
+        "label": "Footer First Column Config Menu",
+        "valueType": "string",
+        "required": true
       },
       {
-        "component": "container",
-        "name": "legalLinks",
-        "label": "Legal Links",
-        "description": "Bottom footer legal links",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "linkText",
-            "label": "Link Text",
-            "description": "Display text for the legal link"
-          },
-          {
-            "component": "aem-content",
-            "name": "linkUrl",
-            "label": "Link URL",
-            "description": "URL for the legal link"
-          }
-        ]
+        "component": "text",
+        "valueType": "string",
+        "name": "titleSecondColumn",
+        "label": "Title For Second Column",
+        "description": "Title For Second Column"
+      },
+      {
+        "component": "richtext",
+        "name": "configSecondColumn",
+        "value": "",
+        "label": "Footer Second Column Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "titleThirdColumn",
+        "label": "Title For Third Column",
+        "description": "Title For Third Column"
+      },
+      {
+        "component": "richtext",
+        "name": "configThirdColumn",
+        "value": "",
+        "label": "Footer Third Column Config Menu",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "copyrightLinks",
+        "value": "",
+        "label": "Copyright Links for Footer",
+        "valueType": "string",
+        "required": true
       }
     ]
   },
+  {
+      "id": "footer-icon",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "iconImage",
+          "label": "Icon Image",
+          "multi": false
+        },
+        {
+        "component": "aem-content",
+        "name": "iconURL",
+        "label": "Footer Icon URL",
+        "description": "URL the Footer Icon should link to"
+        }
+      ]
+    },
   {
     "id": "article-card-item",
     "fields": [
