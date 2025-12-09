@@ -10,7 +10,12 @@ on:
 jobs:
   real-security-scan:
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      contents: read          # Required to checkout code
+      actions: read           # Required to read actions
+      pull-requests: read     # Required for PR comments
+      issues: read            # Required for issue operations
+      repository-projects: read # Required for project access
 
     steps:
       - name: Checkout Code
@@ -112,52 +117,31 @@ jobs:
         continue-on-error: true
 
       # ===============================
-      # START LOCAL SERVER FOR WEB TESTING
+      # DETERMINE TARGET URL FOR WEB TESTING
       # ===============================
       
-      - name: Start Local Server
+      - name: Set Target URL
         run: |
-          if [ ! -f "index.html" ]; then
-            cat > index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Security Test Page</title>
-          </head>
-          <body>
-              <header>
-                  <h1>Test Application</h1>
-                  <nav>
-                      <ul>
-                          <li><a href="#main">Main Content</a></li>
-                          <li><a href="#footer">Footer</a></li>
-                      </ul>
-                  </nav>
-              </header>
-              <main id="main">
-                  <section>
-                      <h2>Security & Accessibility Testing</h2>
-                      <p>This page is used for comprehensive security and accessibility scanning.</p>
-                      <form method="GET" action="">
-                          <label for="test-input">Test Input:</label>
-                          <input type="text" id="test-input" name="test" placeholder="Enter test data">
-                          <button type="submit">Submit</button>
-                      </form>
-                  </section>
-              </main>
-              <footer id="footer">
-                  <p>&copy; 2025 Test Application</p>
-              </footer>
-          </body>
-          </html>
-          EOF
+          # Extract branch name from GitHub ref
+          BRANCH_NAME="${{ github.ref_name }}"
+          
+          # Set target URL based on branch
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            TARGET_URL="https://main--asus-cto--aps-gc.aem.page/"
+          elif [[ "$BRANCH_NAME" == "dev" ]]; then
+            TARGET_URL="https://dev--asus-cto--aps-gc.aem.page/"
+          else
+            # For other branches, default to main
+            TARGET_URL="https://main--asus-cto--aps-gc.aem.page/"
           fi
           
-          npx http-server . -p 8080 --cors &
-          sleep 10
-          curl -f http://localhost:8080 || echo "Server started"
+          echo "TARGET_URL=$TARGET_URL" >> $GITHUB_ENV
+          echo "🌐 Target URL for security scanning: $TARGET_URL"
+          
+          # Test if URL is accessible
+          curl -f "$TARGET_URL" -o /dev/null -s --max-time 30 || {
+            echo "⚠️ Warning: Target URL not accessible, continuing with scan anyway"
+          }
         continue-on-error: true
 
       # ===============================
@@ -168,7 +152,7 @@ jobs:
       - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
-          target: 'http://localhost:8080'
+          target: ${{ env.TARGET_URL }}
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a -j -m 5 -T 60'
         continue-on-error: true
@@ -176,7 +160,7 @@ jobs:
       # REAL Security Headers Check
       - name: Security Headers Analysis
         run: |
-          curl -I http://localhost:8080 2>/dev/null | python3 -c "
+          curl -I ${{ env.TARGET_URL }} 2>/dev/null | python3 -c "
           import sys, json
           from datetime import datetime
           
@@ -205,7 +189,7 @@ jobs:
                   missing.append(header_name)
           
           result = {
-              'target': 'http://localhost:8080',
+              'target': '${{ env.TARGET_URL }}',
               'headers_found': len(found),
               'headers_missing': len(missing),
               'security_score': max(0, 100 - (len(missing) * 15)),
@@ -231,13 +215,13 @@ jobs:
       # REAL Pa11y Accessibility Test
       - name: Pa11y Accessibility Scan
         run: |
-          pa11y --reporter json http://localhost:8080 > raw-data/pa11y-report.json || echo '{"results":[],"issues":0,"status":"completed"}' > raw-data/pa11y-report.json
+          pa11y --reporter json ${{ env.TARGET_URL }} > raw-data/pa11y-report.json || echo '{"results":[],"issues":0,"status":"completed"}' > raw-data/pa11y-report.json
         continue-on-error: true
 
       # REAL Lighthouse CI
       - name: Lighthouse CI
         run: |
-          lhci autorun --upload.target=filesystem --upload.outputDir=raw-data/lighthouse || echo "Lighthouse completed with warnings"
+          lhci autorun --collect.url="${{ env.TARGET_URL }}" --upload.target=filesystem --upload.outputDir=raw-data/lighthouse || echo "Lighthouse completed with warnings"
           # Convert lighthouse results to simplified JSON
           if [ -f "raw-data/lighthouse/manifest.json" ]; then
             node -e "
@@ -259,7 +243,7 @@ jobs:
       # REAL axe-core Accessibility Test
       - name: axe-core Accessibility Scan
         run: |
-          axe http://localhost:8080 --format json --output raw-data/axe-report.json || echo '{"violations":[],"passes":[],"url":"http://localhost:8080"}' > raw-data/axe-report.json
+          axe ${{ env.TARGET_URL }} --format json --output raw-data/axe-report.json || echo '{"violations":[],"passes":[],"url":"${{ env.TARGET_URL }}"}' > raw-data/axe-report.json
         continue-on-error: true
 
       # ===============================
