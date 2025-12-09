@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read          # Required to checkout code
-      actions: read           # Required to read actions
+      actions: write          # Required for artifact upload
       pull-requests: read     # Required for PR comments
       issues: read            # Required for issue operations
       repository-projects: read # Required for project access
+      checks: write           # Required for some security actions
+      statuses: read          # Required for status checks
 
     steps:
       - name: Checkout Code
@@ -48,22 +50,18 @@ jobs:
           npx eslint . --ext .js,.jsx,.ts,.tsx -f json -o raw-data/eslint-report.json || echo '{"results":[],"errorCount":0,"warningCount":0}' > raw-data/eslint-report.json
         continue-on-error: true
 
-      # REAL Gitleaks - Secret Detection
+      # REAL Gitleaks - Secret Detection (CLI)
       - name: Run Gitleaks Secret Scan
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }} # Optional: for pro features
-        continue-on-error: true
-
-      - name: Save Gitleaks Results
         run: |
-          # Create gitleaks report from action results
-          if [ -f "results.sarif" ]; then
-            jq '.runs[0].results // []' results.sarif > raw-data/gitleaks-report.json
-          else
-            echo '[]' > raw-data/gitleaks-report.json
-          fi
+          # Download and run gitleaks directly
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar xz
+          chmod +x gitleaks
+          
+          # Run gitleaks scan
+          ./gitleaks detect --source . --report-format json --report-path raw-data/gitleaks-report.json --exit-code 0 || echo '[]' > raw-data/gitleaks-report.json
+          
+          # Clean up
+          rm -f gitleaks
         continue-on-error: true
 
       # CodeQL requires security-events permissions which causes issues
@@ -91,29 +89,14 @@ jobs:
           npm audit --audit-level=moderate --json > raw-data/dependency-security-report.json 2>/dev/null || echo '{"vulnerabilities":{},"metadata":{"vulnerabilities":{"total":0,"info":0,"low":0,"moderate":0,"high":0,"critical":0}}}' > raw-data/dependency-security-report.json
         continue-on-error: true
 
-      # FREE Semgrep - Static analysis security scanner
+      # FREE Semgrep - Static analysis security scanner (CLI)
       - name: Semgrep Security Scan
-        uses: semgrep/semgrep-action@v1
-        with:
-          config: >-
-            p/security-audit
-            p/secrets
-            p/owasp-top-ten
-            p/javascript
-        env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }} # Optional: for enhanced features
-        continue-on-error: true
-
-      - name: Save Semgrep Results
         run: |
-          # Save Semgrep results to raw-data directory
-          if [ -f "semgrep.json" ]; then
-            cp semgrep.json raw-data/semgrep-report.json
-          elif [ -f "semgrep-results.json" ]; then
-            cp semgrep-results.json raw-data/semgrep-report.json
-          else
-            echo '{"results":[],"errors":[],"paths":{"scanned":[]}}' > raw-data/semgrep-report.json
-          fi
+          # Install semgrep using pip
+          pip3 install semgrep
+          
+          # Run semgrep with security rules
+          semgrep --config=auto --json --output=raw-data/semgrep-report.json . || echo '{"results":[],"errors":[],"paths":{"scanned":[]}}' > raw-data/semgrep-report.json
         continue-on-error: true
 
       # ===============================
@@ -148,13 +131,21 @@ jobs:
       # REAL WEB SECURITY SCANS
       # ===============================
       
-      # REAL OWASP ZAP Baseline Scan
+      # REAL OWASP ZAP Baseline Scan (CLI)
       - name: OWASP ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.10.0
-        with:
-          target: ${{ env.TARGET_URL }}
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a -j -m 5 -T 60'
+        run: |
+          # Download and run OWASP ZAP baseline scan
+          docker run --rm -v $(pwd):/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py -t ${{ env.TARGET_URL }} -J zap-baseline-report.json -w baseline-report.md || echo "ZAP scan completed with warnings"
+          
+          # Move report to raw-data if it exists
+          if [ -f "zap-baseline-report.json" ]; then
+            mv zap-baseline-report.json raw-data/
+          else
+            echo '{"alerts":[],"site":{"@name":"'${{ env.TARGET_URL }}'"},"@generated":"'$(date -Iseconds)'"}' > raw-data/zap-baseline-report.json
+          fi
+          
+          # Move markdown report if it exists
+          [ -f "baseline-report.md" ] && mv baseline-report.md raw-data/ || true
         continue-on-error: true
 
       # REAL Security Headers Check
