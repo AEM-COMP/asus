@@ -34,6 +34,20 @@
   --color-border-type: #1a821c;       /* Border type color */
   --color-select-box-highlight: #248dff; /* Select box highlight */
   
+  /* Button System - Moved from webpack/components/button */
+  --btn-bg: var(--color-primary-950);
+  --btn-color: var(--color-primary);
+  --btn-disabled-bg: var(--color-primary-600);
+  --btn-disabled-color: var(--color-primary-800);
+  --btn-hover-bg: var(--color-primary-700);
+  --btn-outline-border: var(--color-primary-950);
+  --btn-outline-disabled-border: var(--color-primary-600);
+  --btn-outline-hover-bg: var(--color-primary-950);
+  --btn-outline-hover-color: var(--color-primary);
+  --btn-link-color: var(--color-primary-950);
+  --btn-link-disabled-color: var(--color-primary-600);
+  --btn-link-hover-color: var(--color-primary-950);
+  
   /* Legacy color mappings for backward compatibility */
   --color-white: var(--color-primary-950);
   --color-black: var(--color-primary);
@@ -2126,19 +2140,92 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Buttons */
+/* ========================================================================== 
+ * Button System - Moved from webpack/components/button
+ * ========================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  font-weight: var(--font-weight-medium);
+  border: none;
   text-decoration: none;
   transition: all 0.2s ease;
+  border-radius: 0.5rem;
   cursor: pointer;
+  font-weight: 400;
+  white-space: nowrap;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  gap: 0.75rem;
+  font-family: var(--font-text);
+  font-weight: var(--regular);
+  letter-spacing: 0;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  background-color: var(--btn-bg);
+  color: var(--btn-color);
 }
+.btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--btn-disabled-bg);
+  color: var(--btn-disabled-color);
+}
+.btn:hover:not(:disabled) {
+    background-color: var(--btn-hover-bg)
+}
+
+.btn:focus-visible:not(:disabled) {
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
+    outline: solid 2px var(--btn-bg);
+    outline-offset: 2px
+}
+.btn-sm {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+}
+.btn-outline {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--btn-outline-border);
+  color: var(--btn-outline-border);
+}
+.btn-outline:disabled {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--btn-outline-disabled-border);
+  color: var(--btn-outline-disabled-border);
+}
+.btn-outline:hover:not(:disabled), .btn-outline:focus:not(:disabled) {
+  background-color: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-color);
+}
+.btn-link {
+  background-color: transparent;
+  color: var(--btn-link-color);
+  padding: 0;
+  gap: 0.5rem;
+}
+.btn-link:disabled {
+  background-color: transparent;
+  color: var(--btn-link-disabled-color);
+}
+.btn-link:hover:not(:disabled), .btn-link:focus:not(:disabled) {
+  background-color: transparent;
+  color: var(--btn-link-hover-color);
+  text-decoration: underline;
+}
+.btn-link.btn-sm {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+/* Legacy Button Styles for Backward Compatibility */
 
 .btn-primary {
   background-color: var(--color-primary);

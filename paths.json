@@ -5,6 +5,7 @@
     "/content/ROG/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/ROG/"
+    "/content/ROG/",
+    "/content/dam/"
   ]
 }

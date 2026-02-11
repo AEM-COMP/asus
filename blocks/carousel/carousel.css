@@ -1,0 +1,690 @@
+/* Import Swiper CSS */
+@import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+
+/* Override default Swiper pagination styles */
+.cmp-carousel .swiper-horizontal > .swiper-pagination-bullets,
+.cmp-carousel .swiper-pagination-bullets.swiper-pagination-horizontal,
+.cmp-carousel .swiper-pagination-custom,
+.cmp-carousel .swiper-pagination-fraction {
+  bottom: unset !important;
+  top: unset !important;
+  left: unset !important;
+  width: unset !important;
+}
+
+/* Carousel Block Styles */
+.block.carousel {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel.panelcontainer {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Carousel Container */
+.cmp-carousel {
+  width: 100%;
+  position: relative;
+  background: #000;
+}
+
+.cmp-carousel__content {
+  position: relative;
+  width: 100%;
+}
+
+/* Swiper Styles */
+.cmp-carousel .swiper {
+  width: 100%;
+  height: 500px; /* Fixed height for UE compatibility */
+  min-height: 500px;
+}
+
+/* Regular viewing - use viewport height */
+.cmp-carousel:not(.ue-authoring) .swiper {
+  height: 80vh;
+}
+
+/* Universal Editor authoring mode - constrained height */
+.cmp-carousel.ue-authoring .swiper {
+  height: 400px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.cmp-carousel .swiper-wrapper {
+  height: 100%;
+}
+
+.cmp-carousel .swiper-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hero Banner Styles within Carousel */
+.cmp-carousel .hero-banner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero Media Wrappers */
+.cmp-carousel .hero-video-wrapper,
+.cmp-carousel .hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.cmp-carousel .hero-video,
+.cmp-carousel .hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center;
+}
+
+.cmp-carousel .hero-video {
+  background: #000;
+}
+
+/* Hero Content */
+.cmp-carousel .hero-content {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+  /* Default center position when no position class is applied */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hero Banner Position Classes */
+.cmp-carousel .hero-banner.hero-content--start-center .hero-content {
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.cmp-carousel .hero-banner.hero-content--center-top .hero-content {
+  top: calc(64px + var(--header-height, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.cmp-carousel .hero-banner.hero-content--end-center .hero-content {
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.cmp-carousel .hero-banner.hero-content--start-top .hero-content {
+  top: 10%;
+  left: 10%;
+  text-align: left;
+}
+
+.cmp-carousel .hero-banner.hero-content--start-bottom .hero-content {
+  bottom: 10%;
+  left: 10%;
+  text-align: left;
+}
+
+.cmp-carousel .hero-banner.hero-content--center-center .hero-content {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.cmp-carousel .hero-banner.hero-content--center-bottom .hero-content {
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.cmp-carousel .hero-banner.hero-content--end-top .hero-content {
+  top: 10%;
+  right: 8%;
+  text-align: right;
+}
+
+.cmp-carousel .hero-banner.hero-content--end-bottom .hero-content {
+  bottom: 10%;
+  right: 8%;
+  text-align: right;
+}
+
+/* Legacy position classes for backward compatibility */
+.cmp-carousel .hero-banner.hero-content--top .hero-content {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.cmp-carousel .hero-banner.hero-content--bottom .hero-content {
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.cmp-carousel .hero-banner.hero-content--left .hero-content {
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.cmp-carousel .hero-banner.hero-content--right .hero-content {
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.cmp-carousel .hero-banner.hero-content--center .hero-content {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Typography */
+.cmp-carousel .product-name {
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: var(--medium);
+  letter-spacing: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.cmp-carousel .headline {
+  font-family: var(--font-display);
+  font-weight: var(--medium);
+  letter-spacing: 0;
+  font-size: 3.25rem;
+  line-height: 3.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Carousel Footer */
+/* .cmp-carousel__footer {
+  position: relative;
+  bottom: 32px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 32px;
+  width: 100%;
+  z-index: 2;
+} */
+ 
+    .cmp-carousel__footer{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    bottom: 20px;
+    min-height: 32px;
+    width: 100%;
+    z-index: 2
+  }
+
+/* Indicators Group */
+.cmp-carousel__indicators-group {
+    background: rgba(0,0,0,.8);
+    border-radius: 32px;
+    height: 16px;
+    width: fit-content
+}
+
+/* Pagination Indicators */
+.cmp-carousel__indicators,.cmp-carousel__indicators-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+/* Individual Indicator */
+.cmp-carousel__indicators {
+    list-style: none;
+    margin: -4px 0 0 -4px;
+    padding: 0
+}
+
+.cmp-carousel__indicator {
+    border-radius: 0;
+    display: flex;
+    height: 24px;
+    width: 24px;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.cmp-carousel__indicator:before {
+    background-color: transparent;
+    border: 1px solid var(--color-primary-950);
+    border-radius: 8px;
+    box-sizing: border-box;
+    content: "";
+    display: inline-block;
+    height: 8px;
+    opacity: 1;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    width: 8px
+}
+
+.cmp-carousel__indicator:hover:before {
+    background-color: hsla(0,0%,100%,.4)
+}
+
+.cmp-carousel__indicator:focus {
+    outline: 0
+}
+
+.cmp-carousel__indicator:focus:before {
+    outline: 2px solid var(--color-focus-ring)
+}
+
+.cmp-carousel__indicator--active {
+    border: 0;
+    cursor: default;
+    margin: 0 8px;
+    width: 96px
+}
+
+.cmp-carousel__indicator--active:before {
+    background-color: var(--color-primary-300);
+    border: 0;
+    width: 100%
+}
+
+.cmp-carousel__indicator--active:after {
+    background-color: var(--color-primary-950);
+    border-radius: 8px;
+    content: "";
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 8px;
+    transform-origin: left;
+    width: calc(100%*var(--slide-progress, 0))
+}
+
+/* Media Controls */
+.cmp-carousel__media-controls {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  gap: 0.5rem;
+  display: none;
+}
+
+.cmp-carousel__media-control {
+    border-radius: 50%;
+    display: flex;
+    height: 32px;
+    width: 32px;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    justify-content: center
+}
+
+/* Autoplay Toggle Button */
+.carousel-autoplay-toggle {
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="9" y="4.66699" width="1.66667" height="6.66667" rx="0.833333" fill="white"/><rect x="5.33398" y="4.66699" width="1.66667" height="6.66667" rx="0.833333" fill="white"/></svg>') center / 16px no-repeat;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  color: var(--color-primary-950, #1a1a1a);
+  padding: 0.25rem;
+  margin-top: -4px;
+}
+
+/* Show media controls only for slides with video */
+.cmp-carousel:has(.swiper-slide-active .hero-video) .cmp-carousel__media-controls {
+  display: flex;
+}
+
+/* Creative Effect Footer Override */
+.cmp-carousel[data-carousel-effect="creative"] .cmp-carousel__footer {
+  position: relative;
+  top: unset;
+  bottom: unset;
+  margin-top: 2rem;
+}
+
+/* State Modifiers */
+/* Autoplay paused state */
+.cmp-carousel:has(.is-autoplay-paused) .carousel-autoplay-toggle {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 12L9 17.1962L9 6.80385L18 12Z" fill="white"/></svg>');
+}
+
+/* Media Control Play/Pause States */
+.cmp-carousel__media-controls .cmp-carousel__media-control--play-pause {
+  background: url('data:image/svg+xml,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle data-figma-bg-blur-radius="10" cx="16" cy="16" r="15.5" fill="%23070707" fill-opacity="0.5" stroke="white"/><rect x="11.6002" y="9.99998" width="0.8" height="12" rx="0.4" fill="white" stroke="white" stroke-width="0.8"/><rect x="19.6002" y="9.99998" width="0.8" height="12" rx="0.4" fill="white" stroke="white" stroke-width="0.8"/></svg>');
+}
+
+.cmp-carousel__media-controls.paused .cmp-carousel__media-control--play-pause {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle xmlns="http://www.w3.org/2000/svg" data-figma-bg-blur-radius="10" cx="16" cy="16" r="15.5" fill="%23070707" fill-opacity="0.5" stroke="white"/><path d="M22.5192 15.1362C23.1807 15.5221 23.1807 16.4779 22.5192 16.8638L13.5039 22.1227C12.8372 22.5116 12 22.0308 12 21.259L12 10.741C12 9.96925 12.8372 9.48838 13.5039 9.87726L22.5192 15.1362Z" fill="white"/></svg>');
+}
+
+/* Autoplay disabled state */
+.swiper:not(.is-autoplay-enabled) .cmp-carousel__indicator--active {
+  background-color: var(--color-primary-950, #1a1a1a);
+}
+
+
+/* Navigation Arrows (if needed) */
+.cmp-carousel__actions {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.cmp-carousel__action {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.cmp-carousel__action:hover {
+  border-color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cmp-carousel__action--previous::before {
+  content: "←";
+  font-size: 20px;
+}
+
+.cmp-carousel__action--next::before {
+  content: "→";
+  font-size: 20px;
+}
+
+/* Placeholder for empty carousel */
+.carousel-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 1.2rem;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+}
+
+/* UE Authoring Environment Detection and Overrides */
+/* Target common UE iframe and editor contexts */
+body[data-aue-behavior] .cmp-carousel .swiper,
+.aem-authoring-enabled .cmp-carousel .swiper,
+.aem-editor .cmp-carousel .swiper,
+iframe[src*="editor"] .cmp-carousel .swiper,
+[data-authoring="true"] .cmp-carousel .swiper {
+  height: 400px !important;
+  max-height: 400px !important;
+  min-height: 300px !important;
+  overflow: hidden !important;
+}
+
+/* Additional UE specific overrides */
+body[data-aue-behavior] .cmp-carousel,
+.aem-authoring-enabled .cmp-carousel,
+.aem-editor .cmp-carousel,
+iframe[src*="editor"] .cmp-carousel,
+[data-authoring="true"] .cmp-carousel {
+  border: 2px dashed #ccc !important;
+  background: #f8f8f8 !important;
+  height: auto !important;
+  max-height: 450px !important;
+  overflow: hidden !important;
+}
+
+/* Prevent viewport-based heights in authoring */
+body[data-aue-behavior] .cmp-carousel .swiper-slide,
+.aem-authoring-enabled .cmp-carousel .swiper-slide,
+.aem-editor .cmp-carousel .swiper-slide,
+iframe[src*="editor"] .cmp-carousel .swiper-slide,
+[data-authoring="true"] .cmp-carousel .swiper-slide {
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+/* Responsive Design */
+/* Tablet/Medium screens - migrated from hero-banner responsive design */
+@media only screen and (max-width: 79.9375rem) {
+  .cmp-carousel .hero-banner,
+  .cmp-carousel .cmp-hero-banner {
+    aspect-ratio: 768/429;
+  }
+  
+  .cmp-carousel .hero-content .headline {
+    font-family: var(--font-display);
+    font-weight: var(--medium);
+    letter-spacing: 0;
+    font-size: 1.875rem;
+    line-height: 2.375rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cmp-carousel .hero-banner.hero-content--start-center .hero-content,
+  .cmp-carousel .cmp-hero-banner.hero-content--start-center .hero-content {
+    left: 20px;
+    top: unset;
+    transform: unset;
+    bottom: 76px;
+  }
+}
+
+/* Mobile screens - migrated from hero-banner responsive design */
+@media only screen and (max-width: 47.9375rem) {
+  .cmp-carousel .hero-banner,
+  .cmp-carousel .cmp-hero-banner {
+    aspect-ratio: 360/528;
+  }
+  
+  .cmp-carousel__footer {
+    justify-content: space-between;
+    bottom: 20px;
+  }
+}
+
+/* Existing carousel responsive rules - maintaining backward compatibility */
+@media (max-width: 1024px) {
+  .cmp-carousel .swiper {
+    height: 80vh;
+    min-height: 400px;
+  }
+  
+  /* Override responsive rules in UE authoring */
+  body[data-aue-behavior] .cmp-carousel .swiper,
+  .aem-authoring-enabled .cmp-carousel .swiper,
+  .aem-editor .cmp-carousel .swiper,
+  iframe[src*="editor"] .cmp-carousel .swiper,
+  [data-authoring="true"] .cmp-carousel .swiper {
+    height: 350px !important;
+    -webkit-transform: none;
+    transform: none;
+    margin-left: auto;
+  }
+  
+  .cmp-carousel .hero-content--top,
+  .cmp-carousel .hero-content--center-top {
+    margin-top: 2rem;
+  }
+  
+  .cmp-carousel .hero-content--bottom {
+    margin-bottom: 2rem;
+  }
+  
+  .cmp-carousel__actions {
+    padding: 0 1rem;
+  }
+  
+  .cmp-carousel__action {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cmp-carousel[data-carousel-effect="creative"] .cmp-carousel__footer {
+    margin-top: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cmp-carousel .swiper {
+    height: 60vh;
+    min-height: 300px;
+  }
+  
+  .cmp-carousel .headline {
+    font-size: 1.8rem;
+  }
+  
+  .cmp-carousel .product-name {
+    font-size: 1rem;
+  }
+  
+  .cmp-carousel .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .cmp-carousel__media-control,
+  .carousel-autoplay-toggle {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles for accessibility - only show outline for keyboard navigation */
+.cmp-carousel__indicator:focus-visible,
+.carousel-autoplay-toggle:focus-visible,
+.cmp-carousel__media-control:focus-visible,
+.cmp-carousel__action:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Remove outline on mouse click */
+.cmp-carousel__indicator:focus:not(:focus-visible),
+.carousel-autoplay-toggle:focus:not(:focus-visible),
+.cmp-carousel__media-control:focus:not(:focus-visible),
+.cmp-carousel__action:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Swiper overrides */
+.cmp-carousel .swiper-slide {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.cmp-carousel .swiper-slide-active {
+  opacity: 1;
+}
+
+/* Loading states */
+.cmp-carousel .hero-video[data-loading="true"],
+.cmp-carousel .hero-image[data-loading="true"] {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+/* UE Authoring specific styles */
+.cmp-carousel.ue-authoring {
+  border: 2px dashed #ccc;
+  background: #f8f8f8;
+}
+
+.cmp-carousel.ue-authoring .swiper-slide {
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+/* Fallback styles when Swiper fails to initialize */
+.swiper-fallback .swiper-slide {
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+}
+
+.swiper-fallback .swiper-wrapper {
+  display: block !important;
+  transform: none !important;
+}
+
+.swiper-fallback .swiper-slide:not(:first-child) {
+  display: none;
+}
